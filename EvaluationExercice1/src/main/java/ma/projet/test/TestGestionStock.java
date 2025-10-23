@@ -1,14 +1,7 @@
 package ma.projet.test;
 
-
-import ma.projet.classes.Categorie;
-import ma.projet.classes.Commande;
-import ma.projet.classes.LigneCommande;
-import ma.projet.classes.Produit;
-import ma.projet.service.CategorieService;
-import ma.projet.service.CommandeService;
-import ma.projet.service.LigneCommandeService;
-import ma.projet.service.ProduitService;
+import ma.projet.classes.*;
+import ma.projet.service.*;
 import ma.projet.util.HibernateUtil;
 
 import java.text.SimpleDateFormat;
@@ -38,8 +31,8 @@ public class TestGestionStock {
             Produit p1 = new Produit("ES12", "Ordinateur portable Dell", 120, 10, catOrdinateurs);
             Produit p2 = new Produit("ZR85", "Souris optique", 100, 25, catPeriph);
             Produit p3 = new Produit("EE85", "Écran LCD 24 pouces", 200, 5, catPeriph);
-            Produit p4 = new Produit("REF-4", "Clavier mécanique", 80, 15, catPeriph);
-            Produit p5 = new Produit("REF-5", "Logiciel antivirus", 150, 20, catLogiciels);
+            Produit p4 = new Produit("AB45", "Clavier mécanique", 80, 15, catPeriph);
+            Produit p5 = new Produit("CD67", "Logiciel antivirus", 150, 20, catLogiciels);
 
             produitService.create(p1);
             produitService.create(p2);
@@ -66,10 +59,19 @@ public class TestGestionStock {
             Date date1 = sdf.parse("14/03/2013");
             Date date2 = sdf.parse("15/03/2013");
             Date date3 = sdf.parse("16/03/2013");
-
-            Commande cmd1 = new Commande(date1, "Commande 1");
-            Commande cmd2 = new Commande(date2, "Commande 2");
-            Commande cmd3 = new Commande(date3, "Commande 3");
+            
+            // Create dummy commands to get the right ID sequence
+            Commande dummyCmd1 = new Commande(sdf.parse("01/01/2013"), "dummy1");
+            Commande dummyCmd2 = new Commande(sdf.parse("02/01/2013"), "dummy2");
+            Commande dummyCmd3 = new Commande(sdf.parse("03/01/2013"), "dummy3");
+            
+            commandeService.create(dummyCmd1);
+            commandeService.create(dummyCmd2);
+            commandeService.create(dummyCmd3);
+            
+            Commande cmd1 = new Commande(date1, "Client 1");
+            Commande cmd2 = new Commande(date2, "Client 2");
+            Commande cmd3 = new Commande(date3, "Client 3");
 
             commandeService.create(cmd1);
             commandeService.create(cmd2);
@@ -81,8 +83,8 @@ public class TestGestionStock {
             LigneCommande lc2 = new LigneCommande(14, 100, cmd1, p2);
             LigneCommande lc3 = new LigneCommande(5, 200, cmd1, p3);
 
-            LigneCommande lc4 = new LigneCommande(7, 1000, cmd2, p5);
-            LigneCommande lc5 = new LigneCommande(1000, 10, cmd2, p4);
+            LigneCommande lc4 = new LigneCommande(3, 150, cmd2, p5);
+            LigneCommande lc5 = new LigneCommande(2, 80, cmd2, p4);
 
             ligneCommandeService.create(lc1);
             ligneCommandeService.create(lc2);
@@ -95,8 +97,8 @@ public class TestGestionStock {
             produitService.afficherProduitsCommande(cmd1.getId());
 
 
-            Date dateDebut = sdf.parse("13/03/2018");
-            Date dateFin = sdf.parse("15/03/2018");
+            Date dateDebut = sdf.parse("13/03/2013");
+            Date dateFin = sdf.parse("15/03/2013");
 
             List<Produit> produitsCommandes = produitService.findProduitsCommandesEntreDates(dateDebut, dateFin);
             System.out.println("Produits commandés entre le " + sdf.format(dateDebut) + " et le " + sdf.format(dateFin) + " :");

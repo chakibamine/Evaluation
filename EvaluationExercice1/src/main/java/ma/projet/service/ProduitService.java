@@ -13,6 +13,8 @@ import org.hibernate.Query;
 
 import java.util.List;
 import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class ProduitService implements IDao<Produit> {
 
@@ -157,7 +159,8 @@ public class ProduitService implements IDao<Produit> {
 
             Commande commande = (Commande) session.get(Commande.class, commandeId);
             if (commande != null) {
-                System.out.println("Commande : " + commande.getId() + "     Date : " + commande.getDateCommande());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.FRENCH);
+                System.out.println("Commande : " + commande.getId() + "     Date : " + sdf.format(commande.getDateCommande()));
                 System.out.println("Liste des produits :");
                 System.out.println("Référence   Prix    Quantité");
 
