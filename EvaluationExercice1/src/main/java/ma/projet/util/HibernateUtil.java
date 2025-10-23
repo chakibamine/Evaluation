@@ -21,8 +21,8 @@ public class HibernateUtil {
             configuration.setProperty("hibernate.connection.username", "root");
             configuration.setProperty("hibernate.connection.password", "root");
             configuration.setProperty("hibernate.hbm2ddl.auto", "update");
-            configuration.setProperty("hibernate.show_sql", "true");
-            configuration.setProperty("hibernate.format_sql", "true");
+            configuration.setProperty("hibernate.show_sql", "false");
+            configuration.setProperty("hibernate.format_sql", "false");
             configuration.setProperty("hibernate.connection.pool_size", "10");
 
             configuration.addAnnotatedClass(Categorie.class);
