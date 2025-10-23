@@ -1,4 +1,4 @@
-package com.example;
+package ma.projet;
 
 /**
  * Hello world!
